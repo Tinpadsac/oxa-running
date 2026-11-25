@@ -13,7 +13,15 @@ export interface MediaItem {
   type: 'IMAGE' | 'VIDEO';
   title: string;
   thumbnailUrl: string;
-  mediaUrl: string; // Para VIDEO: URL de YouTube embed (ej. https://www.youtube.com/embed/ID)
+  mediaUrl: string; // Para VIDEO: URL de YouTube embed (ej. https://www.youtube.com/embed/ID?autoplay=1)
+}
+
+export interface LastEdition {
+  year: string;
+  title: string;
+  description: string;
+  stats: { label: string; value: string }[];
+  media: MediaItem[];
 }
 
 export const EVENT_DATA = {
@@ -76,7 +84,7 @@ export const EVENT_DATA = {
   ] as PricingTier[],
 };
 
-export const PAST_EDITION_DATA = {
+export const LAST_EDITION_DATA: LastEdition = {
   year: '2026',
   title: 'Así se vivió Oxa Running 2026',
   description:
@@ -116,5 +124,5 @@ export const PAST_EDITION_DATA = {
       thumbnailUrl: '/images/portadamov1.png',
       mediaUrl: '/images/portadamov1.png',
     },
-  ] as MediaItem[],
+  ],
 };

@@ -9,8 +9,9 @@ import {
   ArrowRight,
   Flame,
 } from 'lucide-react';
-import { EVENT_DATA, PAST_EDITION_DATA } from '@/data/eventData';
+import { EVENT_DATA, LAST_EDITION_DATA } from '@/data/eventData';
 import PastEditionGallery from '@/components/PastEditionGallery';
+
 
 export default function Home() {
   const whatsappUrl = `https://wa.me/${EVENT_DATA.whatsappNumber}?text=${encodeURIComponent(
@@ -41,7 +42,7 @@ export default function Home() {
               Ruta 12K
             </a>
             <a href="#edicion-anterior" className="transition hover:text-lime-400">
-              Edición {PAST_EDITION_DATA.year}
+              Edición {LAST_EDITION_DATA.year}
             </a>
             <a href="#auspiciadores" className="transition hover:text-lime-400">
               Auspiciadores

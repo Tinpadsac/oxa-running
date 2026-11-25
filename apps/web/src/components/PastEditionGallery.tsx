@@ -2,13 +2,13 @@
 
 import { useState } from 'react';
 import { Play, X, Camera, Film, Sparkles } from 'lucide-react';
-import { PAST_EDITION_DATA, MediaItem } from '@/data/eventData';
+import { LAST_EDITION_DATA, MediaItem } from '@/data/eventData';
 
 export default function PastEditionGallery() {
   const [filter, setFilter] = useState<'ALL' | 'IMAGE' | 'VIDEO'>('ALL');
   const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(null);
 
-  const filteredMedia = PAST_EDITION_DATA.media.filter((item) =>
+  const filteredMedia = LAST_EDITION_DATA.media.filter((item) =>
     filter === 'ALL' ? true : item.type === filter
   );
 
@@ -18,19 +18,19 @@ export default function PastEditionGallery() {
       <div className="text-center">
         <span className="inline-flex items-center gap-1.5 text-sm font-bold uppercase tracking-widest text-lime-400">
           <Sparkles className="h-4 w-4" />
-          Edición {PAST_EDITION_DATA.year}
+          Edición {LAST_EDITION_DATA.year}
         </span>
         <h2 className="mt-2 text-3xl font-black uppercase sm:text-5xl">
-          {PAST_EDITION_DATA.title}
+          {LAST_EDITION_DATA.title}
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-neutral-400">
-          {PAST_EDITION_DATA.description}
+          {LAST_EDITION_DATA.description}
         </p>
       </div>
 
-      {/* Métricas de impacto (Prueba Social) */}
+      {/* Métricas de impacto */}
       <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
-        {PAST_EDITION_DATA.stats.map((stat, idx) => (
+        {LAST_EDITION_DATA.stats.map((stat, idx) => (
           <div
             key={idx}
             className="rounded-2xl border border-white/10 bg-neutral-900/60 p-5 text-center"
@@ -43,7 +43,7 @@ export default function PastEditionGallery() {
         ))}
       </div>
 
-      {/* Filtros */}
+      {/* Filtros de Media */}
       <div className="mt-10 flex justify-center gap-3">
         {[
           { key: 'ALL', label: 'Todo' },
@@ -54,6 +54,7 @@ export default function PastEditionGallery() {
           return (
             <button
               key={key}
+              type="button"
               onClick={() => setFilter(key as 'ALL' | 'IMAGE' | 'VIDEO')}
               className={`inline-flex cursor-pointer items-center gap-2 rounded-full px-5 py-2 text-sm font-bold transition ${
                 isActive
@@ -73,6 +74,7 @@ export default function PastEditionGallery() {
         {filteredMedia.map((item) => (
           <button
             key={item.id}
+            type="button"
             onClick={() => setSelectedMedia(item)}
             className="group relative aspect-[4/3] w-full cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-neutral-900 text-left focus:outline-none focus:ring-2 focus:ring-lime-500"
           >
@@ -83,7 +85,6 @@ export default function PastEditionGallery() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/90 via-neutral-950/20 to-transparent" />
 
-            {/* Indicador de Video */}
             {item.type === 'VIDEO' && (
               <div className="absolute inset-0 flex items-center justify-center">
                 <span className="flex h-14 w-14 items-center justify-center rounded-full bg-orange-500/90 text-white shadow-xl transition group-hover:scale-110">
@@ -92,7 +93,6 @@ export default function PastEditionGallery() {
               </div>
             )}
 
-            {/* Título inferior */}
             <div className="absolute inset-x-0 bottom-0 p-4">
               <span className="text-[10px] font-bold uppercase tracking-widest text-lime-400">
                 {item.type === 'VIDEO' ? 'Video' : 'Fotografía'}
@@ -103,7 +103,7 @@ export default function PastEditionGallery() {
         ))}
       </div>
 
-      {/* Modal Lightbox (Foto ampliada o Reproductor de Video) */}
+      {/* Modal Lightbox */}
       {selectedMedia && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm"
@@ -114,6 +114,7 @@ export default function PastEditionGallery() {
             onClick={(e) => e.stopPropagation()}
           >
             <button
+              type="button"
               onClick={() => setSelectedMedia(null)}
               aria-label="Cerrar"
               className="absolute right-3 top-3 z-10 cursor-pointer rounded-full bg-neutral-900/80 p-2 text-white transition hover:bg-orange-500"
