@@ -9,15 +9,16 @@ import {
   ArrowRight,
   Flame,
 } from 'lucide-react';
-import { EVENT_DATA } from '@/data/eventData';
+import { EVENT_DATA, PAST_EDITION_DATA } from '@/data/eventData';
+import PastEditionGallery from '@/components/PastEditionGallery';
 
 export default function Home() {
   const whatsappUrl = `https://wa.me/${EVENT_DATA.whatsappNumber}?text=${encodeURIComponent(
-    'Hola, quiero información sobre las inscripciones de Oxa Running.'
+    `Hola, quiero información sobre las inscripciones de Oxa Running ${EVENT_DATA.edition}.`
   )}`;
 
   const sponsorWhatsappUrl = `https://wa.me/${EVENT_DATA.whatsappNumber}?text=${encodeURIComponent(
-    'Hola, estoy interesado en ser auspiciador de Oxa Running.'
+    `Hola, estoy interesado en ser auspiciador de Oxa Running ${EVENT_DATA.edition}.`
   )}`;
 
   return (
@@ -38,6 +39,9 @@ export default function Home() {
             </a>
             <a href="#ruta" className="transition hover:text-lime-400">
               Ruta 12K
+            </a>
+            <a href="#edicion-anterior" className="transition hover:text-lime-400">
+              Edición {PAST_EDITION_DATA.year}
             </a>
             <a href="#auspiciadores" className="transition hover:text-lime-400">
               Auspiciadores
@@ -245,6 +249,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Sección Edición Anterior (2026) */}
+      <PastEditionGallery />
 
       {/* Sección Auspiciadores */}
       <section id="auspiciadores" className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
