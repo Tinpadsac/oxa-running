@@ -1,0 +1,130 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  }
+
+enum EventStatus {
+  DRAFT
+  ACTIVE
+  LAST_ARCHIVED
+  HIDDEN
+}
+
+enum PricingStatus {
+  ACTIVE
+  UPCOMING
+  SOLD_OUT
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+}
+
+enum RegistrationStatus {
+  PENDING
+  PAID
+  CANCELLED
+}
+
+model Event {
+  id               String        @id @default(cuid())
+  edition          String        @unique // ej: "2027", "2026"
+  status           EventStatus   @default(DRAFT)
+  tagline          String
+  slogan           String
+  dateText         String
+  startTime        String
+  location         String
+  distanceLabel    String
+  realDistance     String
+  whatsappNumber   String
+  socialHandle     String
+  // IDs de Google Drive para las portadas (opcional si usan imágenes locales)
+  desktopCoverId   String?
+  mobileCoverId    String?
+  // Métricas cuando el evento pasa a LAST_ARCHIVED: [{ label, value }]
+  stats            Json?
+  description      String?       @db.Text
+
+  pricingTiers     PricingTier[]
+  mediaItems       MediaItem[]
+  registrations    Registration[]
+
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  @@index([status])
+}
+
+model PricingTier {
+  id             String         @id @default(cuid())
+  eventId        String
+  event          Event          @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  name           String         // ej: "Preventa 1"
+  subtitle       String
+  priceSoles     Int
+  status         PricingStatus  @default(UPCOMING)
+  totalSlots     Int            @default(100)
+  availableSlots Int            @default(100)
+  benefits       Json           // string[]
+  sortOrder      Int            @default(0)
+
+  registrations  Registration[]
+
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@index([eventId, status])
+}
+
+model MediaItem {
+  id               String    @id @default(cuid())
+  eventId          String
+  event            Event     @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  type             MediaType
+  title            String
+  // Para IMAGE: fileId de Google Drive
+  driveFileId      String?
+  // Para VIDEO: ID de YouTube (ej: "dQw4w9WgXcQ")
+  youtubeId        String?
+  // Miniatura opcional en Drive (si es VIDEO y no quieres usar la de YouTube)
+  thumbnailDriveId String?
+  sortOrder        Int       @default(0)
+
+  createdAt        DateTime  @default(now())
+
+  @@index([eventId, type])
+}
+
+model Registration {
+  id               String             @id @default(cuid())
+  eventId          String
+  event            Event              @relation(fields: [eventId], references: [id])
+  pricingTierId    String
+  pricingTier      PricingTier        @relation(fields: [pricingTierId], references: [id])
+
+  dni              String
+  firstName        String
+  lastName         String
+  email            String
+  phone            String
+  shirtSize        String             // "S" | "M" | "L" | "XL"
+  emergencyContact String
+  emergencyPhone   String
+
+  amountPaid       Int
+  status           RegistrationStatus @default(PENDING)
+  paymentRef       String?            // Código de operación Yape/Plin o ID de pasarela
+
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+
+  @@unique([eventId, dni]) // Evita doble inscripción con el mismo DNI en la misma edición
+  @@index([eventId, status])
+}
