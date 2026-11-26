@@ -10,10 +10,15 @@ import {
   Flame,
 } from 'lucide-react';
 import { EVENT_DATA, LAST_EDITION_DATA } from '@/data/eventData';
+import { getPublicEventsViewModel } from '@/services/events.service';
 import PastEditionGallery from '@/components/PastEditionGallery';
 
+export const revalidate = 60;
 
-export default function Home() {
+export default async function Home() {
+  const { eventData: EVENT_DATA, lastEditionData: LAST_EDITION_DATA } =
+    await getPublicEventsViewModel();
+
   const whatsappUrl = `https://wa.me/${EVENT_DATA.whatsappNumber}?text=${encodeURIComponent(
     `Hola, quiero información sobre las inscripciones de Oxa Running ${EVENT_DATA.edition}.`
   )}`;
@@ -252,7 +257,7 @@ export default function Home() {
       </section>
 
       {/* Sección Edición Anterior (2026) */}
-      <PastEditionGallery />
+      <PastEditionGallery edition={LAST_EDITION_DATA} />
 
       {/* Sección Auspiciadores */}
       <section id="auspiciadores" className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">

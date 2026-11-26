@@ -2,9 +2,19 @@
 
 import { useState } from 'react';
 import { Play, X, Camera, Film, Sparkles } from 'lucide-react';
-import { LAST_EDITION_DATA, MediaItem } from '@/data/eventData';
+import {
+  LAST_EDITION_DATA as DEFAULT_LAST_EDITION,
+  LastEdition,
+  MediaItem,
+} from '@/data/eventData';
 
-export default function PastEditionGallery() {
+interface PastEditionGalleryProps {
+  edition?: LastEdition;
+}
+
+export default function PastEditionGallery({
+  edition: LAST_EDITION_DATA = DEFAULT_LAST_EDITION,
+}: PastEditionGalleryProps) {
   const [filter, setFilter] = useState<'ALL' | 'IMAGE' | 'VIDEO'>('ALL');
   const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(null);
 
