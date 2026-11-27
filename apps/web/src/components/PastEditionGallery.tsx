@@ -91,6 +91,7 @@ export default function PastEditionGallery({
             <img
               src={item.thumbnailUrl}
               alt={item.title}
+              referrerPolicy="no-referrer"
               className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/90 via-neutral-950/20 to-transparent" />
