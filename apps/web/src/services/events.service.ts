@@ -9,7 +9,16 @@ import {
 export type EventViewModel = typeof EVENT_DATA & {
   desktopCoverUrl: string;
   mobileCoverUrl: string;
+  routeImageUrl: string;
 };
+
+export interface PublicSponsorViewModel {
+  id: string;
+  name: string;
+  tier: 'MAIN' | 'GOLD' | 'SILVER' | 'PARTNER';
+  logoUrl: string | null;
+  websiteUrl: string | null;
+}
 
 interface PricingTierDto {
   id: string;
@@ -36,6 +45,8 @@ interface ActiveEventDto {
   socialHandle: string;
   desktopCoverUrl?: string | null;
   mobileCoverUrl?: string | null;
+  routeImageResolvedUrl?: string | null;
+  routeImageUrl?: string | null;
   pricingTiers?: PricingTierDto[];
 }
 
@@ -48,14 +59,24 @@ interface LastArchivedEventDto {
   media?: MediaItem[];
 }
 
+interface SponsorDto {
+  id: string;
+  name: string;
+  tier: 'MAIN' | 'GOLD' | 'SILVER' | 'PARTNER';
+  logoUrl: string | null;
+  websiteUrl: string | null;
+}
+
 interface PublicEventsResponseDto {
   activeEvent: ActiveEventDto | null;
   lastArchivedEvent: LastArchivedEventDto | null;
+  sponsors?: SponsorDto[];
 }
 
 export interface PublicEventsViewModel {
   eventData: EventViewModel;
   lastEditionData: LastEdition;
+  sponsors: PublicSponsorViewModel[];
 }
 
 function resolvePublicEventsEndpoint(): string {
@@ -119,12 +140,17 @@ export async function getPublicEventsViewModel(): Promise<PublicEventsViewModel>
           socialHandle: payload.activeEvent.socialHandle,
           desktopCoverUrl: payload.activeEvent.desktopCoverUrl || '/images/portada1.png',
           mobileCoverUrl: payload.activeEvent.mobileCoverUrl || '/images/portadamov1.png',
+          routeImageUrl:
+            payload.activeEvent.routeImageResolvedUrl ||
+            payload.activeEvent.routeImageUrl ||
+            '/images/ruta-12k.jpg',
           pricingTiers: (payload.activeEvent.pricingTiers ?? []).map(mapPricingTier),
         }
       : {
           ...EVENT_DATA,
           desktopCoverUrl: '/images/portada1.png',
           mobileCoverUrl: '/images/portadamov1.png',
+          routeImageUrl: '/images/ruta-12k.jpg',
         };
 
     const lastEditionData: LastEdition = payload.lastArchivedEvent
@@ -141,19 +167,25 @@ export async function getPublicEventsViewModel(): Promise<PublicEventsViewModel>
         }
       : LAST_EDITION_DATA;
 
-    return { eventData, lastEditionData };
+    const sponsors: PublicSponsorViewModel[] = Array.isArray(payload.sponsors)
+      ? payload.sponsors
+      : [];
+
+    return { eventData, lastEditionData, sponsors };
   } catch (error) {
     console.warn(
       '[EventsService] Fallback estático activado:',
-      error instanceof Error ? error.message : error
+      error instanceof Error ? error.message : error,
     );
     return {
       eventData: {
         ...EVENT_DATA,
         desktopCoverUrl: '/images/portada1.png',
         mobileCoverUrl: '/images/portadamov1.png',
+        routeImageUrl: '/images/ruta-12k.jpg',
       },
       lastEditionData: LAST_EDITION_DATA,
+      sponsors: [],
     };
   }
 }

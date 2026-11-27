@@ -23,12 +23,30 @@ function buildDriveImageUrl(
   return `https://drive.google.com/thumbnail?id=${cleanId}&sz=w${width}`;
 }
 
+function resolveImageOrDriveUrl(
+  directUrl: string | null | undefined,
+  driveId: string | null | undefined,
+  width: number,
+): string | null {
+  if (driveId?.trim()) {
+    return buildDriveImageUrl(driveId, width);
+  }
+  if (directUrl?.trim()) {
+    const cleanUrl = directUrl.trim();
+    if (cleanUrl.includes('drive.google.com')) {
+      return buildDriveImageUrl(cleanUrl, width);
+    }
+    return cleanUrl;
+  }
+  return null;
+}
+
 @Injectable()
 export class EventsService {
   constructor(private readonly prisma: PrismaService) {}
 
   async getPublicLandingData() {
-    const [activeEvent, lastArchivedEvent] = await Promise.all([
+    const [activeEvent, lastArchivedEvent, activeSponsors] = await Promise.all([
       this.prisma.event.findFirst({
         where: { status: EventStatus.ACTIVE },
         include: {
@@ -41,9 +59,13 @@ export class EventsService {
         where: { status: EventStatus.LAST_ARCHIVED },
         include: {
           mediaItems: {
-            orderBy: { sortOrder: 'asc' },
+            orderBy: [{ sortOrder: 'asc' }, { createdAt: 'desc' }],
           },
         },
+      }),
+      this.prisma.sponsor.findMany({
+        where: { isActive: true },
+        orderBy: [{ sortOrder: 'asc' }, { createdAt: 'desc' }],
       }),
     ]);
 
@@ -60,6 +82,12 @@ export class EventsService {
         mobileCoverUrl:
           buildDriveImageUrl(activeEvent.mobileCoverId, 1080) ??
           '/images/portadamov1.png',
+        routeImageResolvedUrl:
+          resolveImageOrDriveUrl(
+            activeEvent.routeImageUrl,
+            activeEvent.routeDriveId,
+            1600,
+          ) ?? '/images/ruta-12k.jpg',
       },
       lastArchivedEvent: lastArchivedEvent
         ? {
@@ -94,6 +122,13 @@ export class EventsService {
             }),
           }
         : null,
+      sponsors: activeSponsors.map((sp) => ({
+        id: sp.id,
+        name: sp.name,
+        tier: sp.tier,
+        logoUrl: resolveImageOrDriveUrl(sp.logoUrl, sp.driveFileId, 600),
+        websiteUrl: sp.websiteUrl,
+      })),
     };
   }
 }

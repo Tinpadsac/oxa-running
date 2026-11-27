@@ -9,22 +9,31 @@ import {
   ArrowRight,
   Flame,
 } from 'lucide-react';
-import { EVENT_DATA, LAST_EDITION_DATA } from '@/data/eventData';
 import { getPublicEventsViewModel } from '@/services/events.service';
 import PastEditionGallery from '@/components/PastEditionGallery';
 
 export const revalidate = 60;
 
+const TIER_LABELS: Record<'MAIN' | 'GOLD' | 'SILVER' | 'PARTNER', string> = {
+  MAIN: 'Auspiciador Principal',
+  GOLD: 'Oro',
+  SILVER: 'Plata',
+  PARTNER: 'Aliado Oficial',
+};
+
 export default async function Home() {
-  const { eventData: EVENT_DATA, lastEditionData: LAST_EDITION_DATA } =
-    await getPublicEventsViewModel();
+  const {
+    eventData: EVENT_DATA,
+    lastEditionData: LAST_EDITION_DATA,
+    sponsors,
+  } = await getPublicEventsViewModel();
 
   const whatsappUrl = `https://wa.me/${EVENT_DATA.whatsappNumber}?text=${encodeURIComponent(
-    `Hola, quiero información sobre las inscripciones de Oxa Running ${EVENT_DATA.edition}.`
+    `Hola, quiero información sobre las inscripciones de Oxa Running ${EVENT_DATA.edition}.`,
   )}`;
 
   const sponsorWhatsappUrl = `https://wa.me/${EVENT_DATA.whatsappNumber}?text=${encodeURIComponent(
-    `Hola, estoy interesado en ser auspiciador de Oxa Running ${EVENT_DATA.edition}.`
+    `Hola, estoy interesado en ser auspiciador de Oxa Running ${EVENT_DATA.edition}.`,
   )}`;
 
   return (
@@ -44,7 +53,7 @@ export default async function Home() {
               Inscripciones
             </a>
             <a href="#ruta" className="transition hover:text-lime-400">
-              Ruta 12K
+              {EVENT_DATA.distanceLabel}
             </a>
             <a href="#edicion-anterior" className="transition hover:text-lime-400">
               Edición {LAST_EDITION_DATA.year}
@@ -64,17 +73,16 @@ export default async function Home() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-neutral-950">
-        {/* Imagen adaptable: portadamov1.png en móvil / portada1.png en PC (>= 768px) */}
         <div className="relative h-80 w-full sm:h-96 md:absolute md:inset-0 md:h-full">
           <picture className="block h-full w-full">
-            <source media="(min-width: 768px)" srcSet="/images/portada1.png" />
+            <source media="(min-width: 768px)" srcSet={EVENT_DATA.desktopCoverUrl} />
             <img
-              src="/images/portadamov1.png"
+              src={EVENT_DATA.mobileCoverUrl}
               alt="Corredor en Oxapampa"
+              referrerPolicy="no-referrer"
               className="h-full w-full object-cover object-center md:opacity-65"
             />
           </picture>
-          {/* Degradado inferior en móvil y lateral en PC */}
           <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/15 to-transparent md:bg-gradient-to-r md:from-neutral-950/85 md:via-neutral-950/35 md:to-transparent" />
         </div>
 
@@ -119,7 +127,7 @@ export default async function Home() {
                 <MapPin className="h-5 w-5 shrink-0 text-lime-400" />
                 <div>
                   <p className="text-[11px] uppercase text-neutral-400">Lugar</p>
-                  <p className="text-sm font-bold">Plaza Principal</p>
+                  <p className="text-sm font-bold">{EVENT_DATA.location}</p>
                 </div>
               </div>
             </div>
@@ -218,7 +226,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Sección Ruta 12K */}
+      {/* Sección Ruta */}
       <section id="ruta" className="border-y border-white/10 bg-neutral-900/40 py-20">
         <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
           <div>
@@ -248,19 +256,72 @@ export default async function Home() {
 
           <div className="overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
             <img
-              src="/images/ruta-12k.jpg"
-              alt="Mapa Ruta 12K Oxapampa"
+              src={EVENT_DATA.routeImageUrl}
+              alt={`Mapa ${EVENT_DATA.distanceLabel} Oxapampa`}
+              referrerPolicy="no-referrer"
               className="h-auto w-full object-cover"
             />
           </div>
         </div>
       </section>
 
-      {/* Sección Edición Anterior (2026) */}
+      {/* Sección Edición Anterior */}
       <PastEditionGallery edition={LAST_EDITION_DATA} />
 
       {/* Sección Auspiciadores */}
       <section id="auspiciadores" className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        {sponsors.length > 0 && (
+          <div className="mb-14">
+            <div className="text-center">
+              <span className="text-sm font-bold uppercase tracking-widest text-lime-400">
+                Marcas Oficiales
+              </span>
+              <h2 className="mt-2 text-3xl font-black uppercase sm:text-5xl">
+                Nuestros <span className="text-orange-500">Auspiciadores</span>
+              </h2>
+            </div>
+
+            <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+              {sponsors.map((sp) => {
+                const cardContent = (
+                  <div className="flex h-36 flex-col items-center justify-between rounded-2xl border border-white/10 bg-neutral-900/70 p-5 text-center transition hover:border-lime-500/40 hover:bg-neutral-900">
+                    <span className="rounded-full bg-white/5 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-lime-400">
+                      {TIER_LABELS[sp.tier]}
+                    </span>
+                    {sp.logoUrl ? (
+                      <img
+                        src={sp.logoUrl}
+                        alt={sp.name}
+                        referrerPolicy="no-referrer"
+                        className="max-h-16 w-auto max-w-full object-contain"
+                      />
+                    ) : (
+                      <p className="text-lg font-black uppercase tracking-tight text-white">
+                        {sp.name}
+                      </p>
+                    )}
+                    <span className="text-xs font-medium text-neutral-400">{sp.name}</span>
+                  </div>
+                );
+
+                return sp.websiteUrl ? (
+                  <a
+                    key={sp.id}
+                    href={sp.websiteUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block"
+                  >
+                    {cardContent}
+                  </a>
+                ) : (
+                  <div key={sp.id}>{cardContent}</div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         <div className="rounded-3xl border border-lime-500/30 bg-gradient-to-br from-neutral-900 to-neutral-950 p-8 text-center sm:p-14">
           <Handshake className="mx-auto h-12 w-12 text-lime-400" />
           <h2 className="mt-4 text-3xl font-black uppercase sm:text-4xl">
