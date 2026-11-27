@@ -144,11 +144,12 @@ export default function PastEditionGallery({
                 />
               </div>
             ) : (
-              <img
-                src={selectedMedia.mediaUrl}
-                alt={selectedMedia.title}
-                className="max-h-[80vh] w-full bg-black object-contain"
-              />
+                <img
+                  src={selectedMedia.mediaUrl}
+                  alt={selectedMedia.title}
+                  referrerPolicy="no-referrer"
+                  className="max-h-[80vh] w-full bg-black object-contain"
+                />
             )}
 
             <div className="border-t border-white/10 p-4">
