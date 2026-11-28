@@ -98,13 +98,13 @@ export default async function Home() {
           <div className="max-w-3xl">
             <span className="inline-flex items-center gap-2 rounded-full border border-lime-500/40 bg-neutral-950/75 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-lime-400 backdrop-blur-sm">
               <Mountain className="h-4 w-4 shrink-0" />
-              EL RETO HISTÓRICO • MEDIA MARATÓN 21K
+              EL RETO HISTÓRICO • MEDIA MARATÓN
             </span>
 
             <h1 className="mt-4 text-3xl font-black uppercase leading-tight tracking-tight text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)] sm:text-5xl md:mt-5 lg:text-6xl">
               OXA<span className="text-lime-500">RUNNING</span>{' '}
               <span className="text-orange-500">{EVENT_DATA.edition} 21K:</span>{' '}
-              <span className="block sm:inline">CONQUISTA LA TIERRA DE NEBLINA</span>
+              <span className="block sm:inline"> LA CONQUISA </span>
             </h1>
 
             <p className="mt-3 text-base font-semibold tracking-widest text-neutral-200 sm:text-xl">
@@ -245,10 +245,10 @@ export default async function Home() {
         <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
           <div>
             <span className="text-sm font-bold uppercase tracking-widest text-lime-400">
-              CIRCUITO OFICIAL HOMOLOGADO
+              CIRCUITO OFICIAL 
             </span>
             <h2 className="mt-2 text-3xl font-black uppercase sm:text-5xl">
-              <span className="text-orange-500">21.097 KM</span> DE PURA DETERMINACIÓN
+              <span className="text-orange-500">21 KM</span> DE PURA DETERMINACIÓN
             </h2>
             <p className="mt-4 leading-relaxed text-neutral-300">
               Partida y meta en la histórica <strong>Plaza Principal de Oxapampa</strong>. Una ruta
@@ -269,7 +269,7 @@ export default async function Home() {
               <li className="flex items-start gap-3 rounded-xl border border-white/10 bg-neutral-950/70 p-3.5">
                 <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-orange-400" />
                 <span>
-                  <strong className="text-white">Superficie 100% asfalto:</strong> Trazado vial para
+                  <strong className="text-white">Superficie :</strong> Trazado vial para
                   buscar tu mejor marca personal.
                 </span>
               </li>
