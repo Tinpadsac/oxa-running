@@ -29,7 +29,7 @@ export default async function Home() {
   } = await getPublicEventsViewModel();
 
   const whatsappUrl = `https://wa.me/${EVENT_DATA.whatsappNumber}?text=${encodeURIComponent(
-    `Hola, quiero información sobre las inscripciones de Oxa Running ${EVENT_DATA.edition}.`,
+    `Hola, quiero información sobre las inscripciones de Oxa Running ${EVENT_DATA.edition} (21K).`,
   )}`;
 
   const sponsorWhatsappUrl = `https://wa.me/${EVENT_DATA.whatsappNumber}?text=${encodeURIComponent(
@@ -53,7 +53,7 @@ export default async function Home() {
               Inscripciones
             </a>
             <a href="#ruta" className="transition hover:text-lime-400">
-              {EVENT_DATA.distanceLabel}
+              Circuito 21K
             </a>
             <a href="#edicion-anterior" className="transition hover:text-lime-400">
               Edición {LAST_EDITION_DATA.year}
@@ -71,7 +71,7 @@ export default async function Home() {
         </div>
       </header>
 
-     {/* Hero Section */}
+      {/* 1. Sección Hero (Impacto inicial) */}
       <section className="relative overflow-hidden bg-neutral-950">
         {/* En móvil: proporción vertical completa (3:4) para lucir paisaje, corredor y pista sin cortes */}
         {/* En PC (md+): se mantiene intacto como fondo panorámico absoluto */}
@@ -90,29 +90,32 @@ export default async function Home() {
           <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-neutral-950/55 to-transparent md:hidden" />
 
           {/* Degradado inferior corto en móvil (solo 22% final) y degradado lateral en PC */}
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[22%] bg-gradient-to-t from-neutral-950 via-neutral-950/65 to-transparent md:inset-0 md:h-full md:bg-gradient-to-r md:from-neutral-950/85 md:via-neutral-950/35 md:to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[22%] bg-gradient-to-t from-neutral-950 via-neutral-950/65 to-transparent md:inset-0 md:h-full md:bg-gradient-to-r md:from-neutral-950/90 md:via-neutral-950/45 md:to-transparent" />
         </div>
 
         {/* Contenido: en móvil sube ligeramente (-mt-12) para integrarse sin tapar al corredor */}
         <div className="relative z-10 mx-auto -mt-12 max-w-7xl px-4 pb-16 sm:px-6 md:mt-0 md:pb-20 md:pt-32 lg:px-8 lg:pb-24 lg:pt-36">
-          <div className="max-w-2xl">
+          <div className="max-w-3xl">
             <span className="inline-flex items-center gap-2 rounded-full border border-lime-500/40 bg-neutral-950/75 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-lime-400 backdrop-blur-sm">
-              <Mountain className="h-4 w-4" />
-              {EVENT_DATA.tagline}
+              <Mountain className="h-4 w-4 shrink-0" />
+              EL RETO HISTÓRICO • MEDIA MARATÓN 21K
             </span>
 
-            <h1 className="mt-4 text-4xl font-black uppercase tracking-tight text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)] sm:text-6xl md:mt-5 md:text-7xl">
+            <h1 className="mt-4 text-3xl font-black uppercase leading-tight tracking-tight text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)] sm:text-5xl md:mt-5 lg:text-6xl">
               OXA<span className="text-lime-500">RUNNING</span>{' '}
-              <span className="text-orange-500">{EVENT_DATA.edition}</span>
+              <span className="text-orange-500">{EVENT_DATA.edition} 21K:</span>{' '}
+              <span className="block sm:inline">CONQUISTA LA TIERRA DE NEBLINA</span>
             </h1>
 
             <p className="mt-3 text-base font-semibold tracking-widest text-neutral-200 sm:text-xl">
-              {EVENT_DATA.slogan}
+              CORRE • RESPIRA • CONECTA
             </p>
 
-            <p className="mt-4 max-w-xl text-sm leading-relaxed text-neutral-300 sm:text-base">
-              Acepta el reto en la tierra de neblina y aventura. Corre rodeado de naturaleza en la
-              Reserva de Biosfera Oxapampa-Asháninka-Yánesha.
+            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-neutral-300 sm:text-base">
+              Hay kilómetros que se miden en el reloj, y otros que se graban en la memoria. En
+              octubre de 2027, la Reserva de Biósfera Oxapampa-Asháninka-Yánesha abre sus carreteras
+              para tu mayor desafío. Siente el aire puro y desafía tus límites entre montañas y corre
+              donde la montaña abraza a los valientes. ¿Tienes lo necesario para cruzar la meta?
             </p>
 
             {/* Datos clave */}
@@ -144,34 +147,36 @@ export default async function Home() {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
               <a
                 href="#preventa"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-orange-500 px-8 py-4 text-base font-bold text-white shadow-xl shadow-orange-500/30 transition hover:bg-orange-600"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-orange-500 px-8 py-4 text-center text-sm font-bold text-white shadow-xl shadow-orange-500/30 transition hover:bg-orange-600 sm:text-base"
               >
-                Asegurar mi Cupo en Preventa
-                <ArrowRight className="h-5 w-5" />
+                Aceptar el Reto • Asegurar Preventa
+                <ArrowRight className="h-5 w-5 shrink-0" />
               </a>
               <a
                 href="#ruta"
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-neutral-900/70 px-8 py-4 text-base font-bold text-white backdrop-blur-sm transition hover:bg-white/10"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-neutral-900/70 px-8 py-4 text-center text-sm font-bold text-white backdrop-blur-sm transition hover:bg-white/10 sm:text-base"
               >
-                Ver Ruta {EVENT_DATA.realDistance}
+                Explorar el Circuito 21K
               </a>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Sección Preventa Dinámica */}
+      {/* 3. Sección de Preventa (Disparador de urgencia) */}
       <section id="preventa" className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <div className="text-center">
           <span className="text-sm font-bold uppercase tracking-widest text-orange-500">
             INSCRIPCIONES TEMPRANAS LIMITADAS
           </span>
-          <h2 className="mt-2 text-3xl font-black uppercase sm:text-5xl">
-            Fases de <span className="text-lime-500">Preventa</span>
+          <h2 className="mx-auto mt-2 max-w-4xl text-3xl font-black uppercase sm:text-5xl">
+            TU LUGAR EN LA LÍNEA DE PARTIDA{' '}
+            <span className="text-lime-500">COMIENZA HOY</span>
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-neutral-400">
-            Los 21K de Oxapampa no son para todos, son para quienes deciden prepararse antes. 
-            Asegura tu dorsal oficial y tu kit finisher antes de que se agoten los cupos de lanzamiento
+            Los 21K de Oxapampa no son para todos, son para quienes deciden prepararse antes.
+            Asegura tu dorsal oficial y tu kit finisher antes de que se agoten los cupos de
+            lanzamiento.
           </p>
         </div>
 
@@ -235,27 +240,52 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Sección Ruta */}
+      {/* 2. Sección del Circuito 21K («El Desafío») */}
       <section id="ruta" className="border-y border-white/10 bg-neutral-900/40 py-20">
         <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
           <div>
             <span className="text-sm font-bold uppercase tracking-widest text-lime-400">
-              Recorrido Oficial
+              CIRCUITO OFICIAL HOMOLOGADO
             </span>
             <h2 className="mt-2 text-3xl font-black uppercase sm:text-5xl">
-              {EVENT_DATA.distanceLabel}{' '}
-              <span className="text-orange-500">({EVENT_DATA.realDistance})</span>
+              <span className="text-orange-500">21.097 KM</span> DE PURA DETERMINACIÓN
             </h2>
-            <p className="mt-4 text-neutral-300">
-              Partida y meta en la histórica <strong>{EVENT_DATA.location}</strong>. Una ruta rápida y desafiante que cruza 
-              el corazón del valle, adentrándose por los sectores de Chontabamba y La Florida 
-              rodeados de vegetación. Un trazado técnico diseñado para poner a prueba tu ritmo, 
-              tu resistencia y tu mente desde las 6:30 AM
+            <p className="mt-4 leading-relaxed text-neutral-300">
+              Partida y meta en la histórica <strong>Plaza Principal de Oxapampa</strong>. Una ruta
+              rápida y desafiante que cruza el corazón del valle, adentrándose por los sectores de
+              Chontabamba y La Florida rodeados de vegetación. Un trazado técnico diseñado para poner
+              a prueba tu ritmo, tu resistencia y tu mente desde las 6:30 AM.
             </p>
-            <div className="mt-8 grid grid-cols-2 gap-4">
+
+            {/* Puntos clave de ruta */}
+            <ul className="mt-6 space-y-3.5 text-sm text-neutral-200 sm:text-base">
+              <li className="flex items-start gap-3 rounded-xl border border-white/10 bg-neutral-950/70 p-3.5">
+                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-lime-400" />
+                <span>
+                  <strong className="text-white">Salida matutina (6:30 AM):</strong> Aire fresco y
+                  baja temperatura ideal para ritmo de fondo.
+                </span>
+              </li>
+              <li className="flex items-start gap-3 rounded-xl border border-white/10 bg-neutral-950/70 p-3.5">
+                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-orange-400" />
+                <span>
+                  <strong className="text-white">Superficie 100% asfalto:</strong> Trazado vial para
+                  buscar tu mejor marca personal.
+                </span>
+              </li>
+              <li className="flex items-start gap-3 rounded-xl border border-white/10 bg-neutral-950/70 p-3.5">
+                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-lime-400" />
+                <span>
+                  <strong className="text-white">Entorno de Biósfera:</strong> Oxígeno limpio y
+                  paisajes de postal en cada kilómetro.
+                </span>
+              </li>
+            </ul>
+
+            <div className="mt-6 grid grid-cols-2 gap-4">
               <div className="rounded-xl border border-white/10 bg-neutral-950 p-4">
-                <p className="text-xs uppercase text-neutral-400">Distancia Real</p>
-                <p className="mt-1 text-2xl font-black text-lime-400">{EVENT_DATA.realDistance}</p>
+                <p className="text-xs uppercase text-neutral-400">Distancia Oficial</p>
+                <p className="mt-1 text-2xl font-black text-lime-400">21.097 KM</p>
               </div>
               <div className="rounded-xl border border-white/10 bg-neutral-950 p-4">
                 <p className="text-xs uppercase text-neutral-400">Hora de Partida</p>
@@ -267,7 +297,7 @@ export default async function Home() {
           <div className="overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
             <img
               src={EVENT_DATA.routeImageUrl}
-              alt={`Mapa ${EVENT_DATA.distanceLabel} Oxapampa`}
+              alt="Mapa Circuito Oficial 21K Oxapampa"
               referrerPolicy="no-referrer"
               className="h-auto w-full object-cover"
             />
@@ -358,7 +388,7 @@ export default async function Home() {
       {/* Footer */}
       <footer className="border-t border-white/10 bg-neutral-950 py-10 text-center text-sm text-neutral-400">
         <p className="font-bold text-white">
-          {EVENT_DATA.brand} • {EVENT_DATA.slogan}
+          {EVENT_DATA.brand} • CORRE • RESPIRA • CONECTA
         </p>
         <p className="mt-2">
           Oxapampa, Perú • Informes: {EVENT_DATA.whatsappDisplay} • {EVENT_DATA.socialHandle}

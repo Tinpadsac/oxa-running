@@ -32,8 +32,8 @@ export const EVENT_DATA = {
   dateText: 'Octubre 2027',
   startTime: '6:30 AM',
   location: 'Plaza Principal de Oxapampa',
-  distanceLabel: 'Ruta Oficial 12K',
-  realDistance: '12.5K',
+  distanceLabel: 'Circuito 21K',
+  realDistance: '21.097 KM',
   whatsappNumber: '51999999999', // Reemplazar por el número real del organizador
   whatsappDisplay: '+51 999 999 999',
   socialHandle: '@oxarunning',
