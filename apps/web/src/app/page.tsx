@@ -71,29 +71,37 @@ export default async function Home() {
         </div>
       </header>
 
-      {/* Hero Section */}
+     {/* Hero Section */}
       <section className="relative overflow-hidden bg-neutral-950">
-        <div className="relative h-80 w-full sm:h-96 md:absolute md:inset-0 md:h-full">
+        {/* En móvil: proporción vertical completa (3:4) para lucir paisaje, corredor y pista sin cortes */}
+        {/* En PC (md+): se mantiene intacto como fondo panorámico absoluto */}
+        <div className="relative aspect-[3/4] w-full sm:aspect-[4/5] md:absolute md:inset-0 md:aspect-auto md:h-full">
           <picture className="block h-full w-full">
             <source media="(min-width: 768px)" srcSet={EVENT_DATA.desktopCoverUrl} />
             <img
               src={EVENT_DATA.mobileCoverUrl}
               alt="Corredor en Oxapampa"
               referrerPolicy="no-referrer"
-              className="h-full w-full object-cover object-center md:opacity-65"
+              className="h-full w-full object-cover object-[center_65%] md:object-center md:opacity-65"
             />
           </picture>
-          <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/15 to-transparent md:bg-gradient-to-r md:from-neutral-950/85 md:via-neutral-950/35 md:to-transparent" />
+
+          {/* Sombra superior muy sutil en móvil solo para dar contraste al logo y botón del navbar */}
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-neutral-950/55 to-transparent md:hidden" />
+
+          {/* Degradado inferior corto en móvil (solo 22% final) y degradado lateral en PC */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[22%] bg-gradient-to-t from-neutral-950 via-neutral-950/65 to-transparent md:inset-0 md:h-full md:bg-gradient-to-r md:from-neutral-950/85 md:via-neutral-950/35 md:to-transparent" />
         </div>
 
-        <div className="relative mx-auto max-w-7xl px-4 pb-16 pt-6 sm:px-6 md:pb-20 md:pt-32 lg:pb-24 lg:pt-36 lg:px-8">
+        {/* Contenido: en móvil sube ligeramente (-mt-12) para integrarse sin tapar al corredor */}
+        <div className="relative z-10 mx-auto -mt-12 max-w-7xl px-4 pb-16 sm:px-6 md:mt-0 md:pb-20 md:pt-32 lg:px-8 lg:pb-24 lg:pt-36">
           <div className="max-w-2xl">
-            <span className="inline-flex items-center gap-2 rounded-full border border-lime-500/40 bg-lime-500/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-lime-400">
+            <span className="inline-flex items-center gap-2 rounded-full border border-lime-500/40 bg-neutral-950/75 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-lime-400 backdrop-blur-sm">
               <Mountain className="h-4 w-4" />
               {EVENT_DATA.tagline}
             </span>
 
-            <h1 className="mt-5 text-4xl font-black uppercase tracking-tight text-white sm:text-6xl md:text-7xl">
+            <h1 className="mt-4 text-4xl font-black uppercase tracking-tight text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)] sm:text-6xl md:mt-5 md:text-7xl">
               OXA<span className="text-lime-500">RUNNING</span>{' '}
               <span className="text-orange-500">{EVENT_DATA.edition}</span>
             </h1>
@@ -102,27 +110,28 @@ export default async function Home() {
               {EVENT_DATA.slogan}
             </p>
 
-            <p className="mt-4 max-w-xl text-sm text-neutral-300 sm:text-base">
-              Hay kilómetros que se miden en el reloj, y otros que se graban en la memoria. En octubre de 2027, la Reserva de Biósfera Oxapampa-Asháninka-Yánesha abre sus carreteras para tu mayor desafío. Siente el aire puro y desafía tus límites entre montañas y corre donde la montaña abraza a los valientes. ¿Tienes lo necesario para cruzar la meta?
+            <p className="mt-4 max-w-xl text-sm leading-relaxed text-neutral-300 sm:text-base">
+              Acepta el reto en la tierra de neblina y aventura. Corre rodeado de naturaleza en la
+              Reserva de Biosfera Oxapampa-Asháninka-Yánesha.
             </p>
 
             {/* Datos clave */}
             <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
-              <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-neutral-950/60 p-3.5 backdrop-blur-sm">
+              <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-neutral-900/75 p-3.5 backdrop-blur-sm">
                 <Calendar className="h-5 w-5 shrink-0 text-lime-400" />
                 <div>
                   <p className="text-[11px] uppercase text-neutral-400">Fecha</p>
                   <p className="text-sm font-bold">{EVENT_DATA.dateText}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-neutral-950/60 p-3.5 backdrop-blur-sm">
+              <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-neutral-900/75 p-3.5 backdrop-blur-sm">
                 <Clock className="h-5 w-5 shrink-0 text-orange-400" />
                 <div>
                   <p className="text-[11px] uppercase text-neutral-400">Partida</p>
                   <p className="text-sm font-bold">{EVENT_DATA.startTime}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-neutral-950/60 p-3.5 backdrop-blur-sm">
+              <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-neutral-900/75 p-3.5 backdrop-blur-sm">
                 <MapPin className="h-5 w-5 shrink-0 text-lime-400" />
                 <div>
                   <p className="text-[11px] uppercase text-neutral-400">Lugar</p>
@@ -137,12 +146,12 @@ export default async function Home() {
                 href="#preventa"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-orange-500 px-8 py-4 text-base font-bold text-white shadow-xl shadow-orange-500/30 transition hover:bg-orange-600"
               >
-                Aceptar el Reto • Asegurar Preventa
+                Asegurar mi Cupo en Preventa
                 <ArrowRight className="h-5 w-5" />
               </a>
               <a
                 href="#ruta"
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-neutral-950/50 px-8 py-4 text-base font-bold text-white backdrop-blur-sm transition hover:bg-white/10"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-neutral-900/70 px-8 py-4 text-base font-bold text-white backdrop-blur-sm transition hover:bg-white/10"
               >
                 Ver Ruta {EVENT_DATA.realDistance}
               </a>
