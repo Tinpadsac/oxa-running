@@ -103,8 +103,7 @@ export default async function Home() {
             </p>
 
             <p className="mt-4 max-w-xl text-sm text-neutral-300 sm:text-base">
-              Acepta el reto en la tierra de neblina y aventura. Corre rodeado de naturaleza en la
-              Reserva de Biosfera Oxapampa-Asháninka-Yánesha.
+              Hay kilómetros que se miden en el reloj, y otros que se graban en la memoria. En octubre de 2027, la Reserva de Biósfera Oxapampa-Asháninka-Yánesha abre sus carreteras para tu mayor desafío. Siente el aire puro y desafía tus límites entre montañas y corre donde la montaña abraza a los valientes. ¿Tienes lo necesario para cruzar la meta?
             </p>
 
             {/* Datos clave */}
@@ -138,7 +137,7 @@ export default async function Home() {
                 href="#preventa"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-orange-500 px-8 py-4 text-base font-bold text-white shadow-xl shadow-orange-500/30 transition hover:bg-orange-600"
               >
-                Asegurar mi Cupo en Preventa
+                Aceptar el Reto • Asegurar Preventa
                 <ArrowRight className="h-5 w-5" />
               </a>
               <a
@@ -156,13 +155,14 @@ export default async function Home() {
       <section id="preventa" className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <div className="text-center">
           <span className="text-sm font-bold uppercase tracking-widest text-orange-500">
-            Inscripciones Abiertas
+            INSCRIPCIONES TEMPRANAS LIMITADAS
           </span>
           <h2 className="mt-2 text-3xl font-black uppercase sm:text-5xl">
             Fases de <span className="text-lime-500">Preventa</span>
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-neutral-400">
-            Inscríbete temprano y asegura tu kit completo al mejor precio de la temporada.
+            Los 21K de Oxapampa no son para todos, son para quienes deciden prepararse antes. 
+            Asegura tu dorsal oficial y tu kit finisher antes de que se agoten los cupos de lanzamiento
           </p>
         </div>
 
@@ -238,9 +238,10 @@ export default async function Home() {
               <span className="text-orange-500">({EVENT_DATA.realDistance})</span>
             </h2>
             <p className="mt-4 text-neutral-300">
-              Partida y llegada en la <strong>{EVENT_DATA.location}</strong>. Un circuito desafiante
-              y escénico que recorre sectores emblemáticos como Chontabamba y La Florida, rodeado
-              del verde característico del valle de Oxapampa.
+              Partida y meta en la histórica <strong>{EVENT_DATA.location}</strong>. Una ruta rápida y desafiante que cruza 
+              el corazón del valle, adentrándose por los sectores de Chontabamba y La Florida 
+              rodeados de vegetación. Un trazado técnico diseñado para poner a prueba tu ritmo, 
+              tu resistencia y tu mente desde las 6:30 AM
             </p>
             <div className="mt-8 grid grid-cols-2 gap-4">
               <div className="rounded-xl border border-white/10 bg-neutral-950 p-4">

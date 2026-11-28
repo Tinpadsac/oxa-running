@@ -27,7 +27,7 @@ export interface LastEdition {
 export const EVENT_DATA = {
   brand: 'OXA RUNNING',
   edition: '2027',
-  tagline: 'Reto de la Reserva de Biosfera',
+  tagline: 'EL RETO HISTÓRICO • MEDIA MARATÓN 21K',
   slogan: 'CORRE • RESPIRA • CONECTA',
   dateText: 'Octubre 2027',
   startTime: '6:30 AM',
